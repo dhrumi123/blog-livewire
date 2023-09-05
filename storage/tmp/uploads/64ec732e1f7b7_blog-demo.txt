@@ -1,0 +1,16 @@
+1. create project
+2. composer require laravel/breeze --dev
+3. php artisan breeze:install
+4. npm install
+5. npm run dev
+6. composer require spatie/laravel-permission
+7. config/app.php -> providers -> Spatie\Permission\PermissionServiceProvider::class,
+8. php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+9. create migration 
+10. composer require livewire/livewire
+11. kerner.php -> middlewareAliases
+	'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+	'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+    	'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
+
+12.composer require rappasoft/laravel-livewire-tables
