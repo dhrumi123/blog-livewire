@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Livewire\BlogViewComponent;
+
 use App\Http\Livewire\CategoryComponent;
 use App\Http\Livewire\SubAdminComponent;
 use App\Http\Livewire\BlogCreateComponent;
@@ -49,6 +51,9 @@ Route::middleware('auth')->group(function () {
     Route::get('blogs', BlogComponent::class)->name('admin.blogs');  
     Route::get('blog/create', BlogCreateComponent::class)->name('admin.createblog');
     Route::get('blog/{blog}/update', BlogUpdate::class)->name('admin.updateblog');
+
+Route::get('blog/{blog}/view', BlogViewComponent::class)->name('admin.viewblog');
+
     Route::post('blogs/media', [BlogCreateComponent::class, 'storeMedia'])->name('blogs.storeMedia');
 
 

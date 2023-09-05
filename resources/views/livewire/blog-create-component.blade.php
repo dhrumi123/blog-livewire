@@ -71,6 +71,17 @@
                             </div>
                             <div class="col-sm-12">
                                 <div class="mb-3">
+                                    <div class="form-group">
+                                        <label for="short_description">Short Description:</label>
+                                        <textarea id="short_description" wire:model.defer="state.short_description" class="form-control"></textarea>
+                                    </div>
+                                    @error('short_description')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="mb-3">
                                     <div wire:ignore class="form-group">
                                         <label for="note">Note:</label>
                                         <textarea id="note" data-note="@this" class="form-control"></textarea>

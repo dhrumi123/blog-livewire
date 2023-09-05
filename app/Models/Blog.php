@@ -14,6 +14,7 @@ class Blog extends Model
         'category_id',
         'sub_category_id',
         'title',
+        'short_description',
         'body',
         'slug',
         'image',

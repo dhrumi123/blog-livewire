@@ -37,21 +37,6 @@
                                     <div class="blog-date"><span>{{ date('d', strtotime($blog->created_at)) }}</span>
                                         {{ date('F', strtotime($blog->created_at)) }}
                                         {{ date('Y', strtotime($blog->created_at)) }}
-                                        <p class="card-float">
-                                            <a href="{{ route('admin.updateblog', $blog) }}" 
-                                                class="mr-1 edit-link btn btn-icon btn-outline-info">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <a href="#"
-                                                wire:click.prevent="confirmblogRemoval({{ $blog->id }})"
-                                                class="mr-1 delete-link btn btn-icon btn-outline-danger">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                            <a href="#" wire:click.prevent="changeStatus({{ $blog->id }})"
-                                                class="mr-1 status-link btn btn-icon btn-outline-success">
-                                                <i class="fa fa-lock"></i>
-                                            </a>
-                                        </p>
                                     </div>
                                     <h6>{{ ucfirst($blog->title) }}</h6>
                                     <div class="blog-bottom-content">
@@ -61,7 +46,37 @@
                                                 {{ $blog->subCategories->name }} )</li>
                                         </ul>
                                         <hr>
-                                        <p class="mt-0">{!! $blog->body !!}</p>
+                                        <p class="mt-0">{{ $blog->short_description }}</p>
+                                        <p class="card-float">
+                                            <a href="{{ route('admin.updateblog', $blog) }}"
+                                                class="mr-1 edit-link btn btn-icon btn-outline-info">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a href="#"
+                                                wire:click.prevent="confirmblogRemoval({{ $blog->id }})"
+                                                class="mr-1 delete-link btn btn-icon btn-outline-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                            <a href="{{ route('admin.viewblog', $blog) }}"
+                                                class="mr-1 view-link btn btn-icon btn-outline-primary">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            @if ($blog->status == 1)
+                                                <a href="#"
+                                                    wire:click.prevent="confirmChangeStatus({{ $blog->id }})"
+                                                    class="mr-1 status-link btn btn-icon btn-outline-success"
+                                                    value="1">
+                                                    <i class="fa fa-lock"></i>
+                                                </a>
+                                            @else
+                                                <a href="#"
+                                                    wire:click.prevent="confirmChangeStatus({{ $blog->id }})"
+                                                    class="mr-1 status-link btn btn-icon btn-outline-danger"
+                                                    value="0">
+                                                    <i class="fa fa-lock"></i>
+                                                </a>
+                                            @endif
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -91,11 +106,36 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="changeStatusModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        wire:ignore.self>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Change Status Blog</h5>
+                </div>
+                <div class="modal-body">
+                    <h4>Are you sure you want to change the status of this Blog? </h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i
+                            class="mr-2 fa fa-times"></i>Cancel</button>
+                    <button type="button" class="btn btn-danger" wire:click.prevent="changeStatus"><i
+                            class="mr-2 fa fa-trash"></i> Change status
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @section('script')
     <script>
         window.addEventListener('show-delete-modal', event => {
             $('#confirmationModal').modal('show');
+        })
+
+        window.addEventListener('show-confirmation-modal', event => {
+            $('#changeStatusModal').modal('show');
         })
     </script>
     <script>
@@ -107,6 +147,11 @@
 
             window.addEventListener('hide-delete-modal', event => {
                 $('#confirmationModal').modal('hide');
+                toastr.success(event.detail.message, 'Success!');
+            })
+
+            window.addEventListener('hide-confirmation-modal', event => {
+                $('#changeStatusModal').modal('hide');
                 toastr.success(event.detail.message, 'Success!');
             })
         })

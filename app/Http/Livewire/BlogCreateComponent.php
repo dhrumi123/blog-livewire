@@ -51,9 +51,10 @@ class BlogCreateComponent extends Component
     public function createBlog(){
 
         $validatedData = Validator::make($this->state, [ 
-            'title' => 'required',
+            'title' => 'required|unique:blogs,title',
             'category_id' => 'required',
             'sub_category_id' => 'required',
+            'short_description' => 'required',
             'note' => 'min:50',
             'image'=> 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'tags' => 'required',
@@ -63,6 +64,7 @@ class BlogCreateComponent extends Component
         $blog->title = $validatedData['title'];
         $blog->category_id = $validatedData['category_id'];
         $blog->sub_category_id = $validatedData['sub_category_id'];
+        $blog->short_description = $validatedData['short_description'];
         $blog->body = $this->state['note'];
         $blog->image = $validatedData['image']->store('Blogs', 'public');
         $blog->slug = Str::slug($validatedData['title']);

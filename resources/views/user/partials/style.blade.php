@@ -47,7 +47,13 @@
         }
 
         img.img-fluid.sm-100-w {
-    height: 300px;
-}
+            height: 300px;
+        }
+        p.card-float {
+            padding-bottom: 20px;
+        }
+        img.img-fluid.w-100 {
+            height: 500px;
+        }
     </style>
     @yield('css')

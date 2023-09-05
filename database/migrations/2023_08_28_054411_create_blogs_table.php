@@ -20,8 +20,8 @@ return new class extends Migration
             $table->text('body');
             $table->text('image');
             $table->string('slug')->unique();
-            $table->enum('status',[0,1])->default(1)->comment('1 = active 0 = deactive');
-            $table->enum('featured',[0,1])->default(1)->comment('1 = featured 0 = not featured');
+            $table->TINYINT('status',[0,1])->default(1)->comment('1 = active 0 = deactive');
+            $table->TINYINT('featured',[0,1])->default(1)->comment('1 = featured 0 = not featured');
             $table->timestamps();
         });
     }

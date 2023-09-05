@@ -59,6 +59,7 @@ class BlogUpdate extends Component
                 'title' => $this->state['title'],
                 'category_id' => $this->state['category_id'],
                 'sub_category_id' => $this->state['sub_category_id'],
+                'short_description' => $this->state['short_description'],
                 'note' => $this->note,
                 'tags' => $this->tags,
             ],
@@ -66,6 +67,7 @@ class BlogUpdate extends Component
             'title' => 'required|unique:blogs,title,'.$this->blog->id,
             'category_id' => 'required',
             'sub_category_id' => 'required',
+            'short_description' => 'required',
             'note' => 'min:50',
             'tags' => 'required',
            ])->validate();
@@ -79,6 +81,7 @@ class BlogUpdate extends Component
         $this->blog->title = $validatedData['title'];
         $this->blog->category_id = $validatedData['category_id'];
         $this->blog->sub_category_id = $validatedData['sub_category_id'];
+        $this->blog->short_description = $validatedData['short_description'];
         $this->blog->body = $validatedData['note'];
         $this->blog->status = $this->state['status'] ?? '1';
         $this->blog->featured = $this->state['featured'] ?? '1';
